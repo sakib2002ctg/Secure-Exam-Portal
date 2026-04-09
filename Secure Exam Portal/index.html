@@ -44,6 +44,27 @@
         .signup-text { text-align: center; font-size: 13px; }
         .signup-text a { color: #ffffff; text-decoration: none; font-weight: 600; transition: color 0.3s; }
         .signup-text a:hover { color: #d82b4a; }
+        @media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack panels vertically */
+        width: 95%;
+        height: auto; /* Let it grow with content */
+        margin: 20px 0;
+    }
+
+    .left-panel {
+        display: none; /* Often best to hide the big image on mobile to save space */
+    }
+
+    .right-panel {
+        padding: 40px 20px;
+        width: 100%;
+    }
+
+    .right-panel h3 {
+        font-size: 24px;
+    }
+}
     </style>
 </head>
 <body>
