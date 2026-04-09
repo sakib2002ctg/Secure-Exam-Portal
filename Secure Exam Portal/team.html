@@ -82,6 +82,35 @@
 
         .btn-back { display: inline-block; background-color: transparent; color: #ffffff; border: 1px solid #ffffff; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
         .btn-back:hover { background-color: #ffffff; color: #000000; }
+        /* Mobile Optimization */
+@media (max-width: 768px) {
+    header {
+        padding: 15px 20px;
+        justify-content: center; /* Center nav on mobile */
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .team-container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .team-container h1 {
+        font-size: 28px;
+    }
+
+    .team-grid {
+        gap: 15px;
+    }
+
+    .team-member {
+        width: 100%; /* Make cards full width on small phones */
+        max-width: 300px;
+    }
+}
     </style>
 </head>
 <body>
