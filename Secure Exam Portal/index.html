@@ -106,7 +106,7 @@
                         <i class="fa-solid fa-id-badge"></i>
                     </div>
 
-                    <button type="submit" class="btn-signin">Begin Session</button>
+                   <button type="button" onclick="validateLogin()">Begin Session</button>
 
                     
                 </form>
@@ -114,6 +114,25 @@
 
         </div>
     </div>
+<script>
+async function validateLogin() {
+    const rollValue = document.querySelector('input').value;
+    
+    const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roll: rollValue })
+    });
 
+    const data = await response.json();
+
+    if (data.success) {
+        localStorage.setItem('studentName', data.name);
+        window.location.href = 'guidelines.html';
+    } else {
+        alert("Roll Number not found in SQL database!");
+    }
+}
+</script>
 </body>
 </html>
