@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Rules & Guidelines</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0b1021 0%, #1a1638 50%, #301020 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            /* Prevents text selection on the page */
+            user-select: none; 
+        }
+        .rules-container {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 50px;
+            border-radius: 15px;
+            width: 700px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-top: 5px solid #d82b4a;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h2 { font-size: 32px; margin-bottom: 10px; }
+        .header p { color: #dddddd; font-size: 15px; }
+        
+        .rule-list { margin-bottom: 40px; }
+        .rule-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #d82b4a;
+        }
+        .rule-item i {
+            font-size: 24px;
+            color: #d82b4a;
+            margin-right: 20px;
+            width: 30px;
+            text-align: center;
+        }
+        .rule-text h4 { font-size: 18px; margin-bottom: 5px; }
+        .rule-text p { font-size: 13px; color: #bbbbbb; }
+
+        .btn-agree {
+            width: 100%;
+            background-color: #d82b4a;
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-agree:hover { background-color: #b8223d; }
+        .warning-msg { text-align: center; margin-top: 15px; font-size: 12px; color: #ff4c4c; }
+    </style>
+</head>
+<body>
+
+    <div class="rules-container">
+        <div class="header">
+            <h2><i class="fa-solid fa-shield-halved"></i> Security Guidelines</h2>
+            <p>Please read the following rules carefully before beginning your exam.</p>
+        </div>
+
+        <div class="rule-list">
+            <div class="rule-item">
+                <i class="fa-solid fa-camera-retro"></i>
+                <div class="rule-text">
+                    <h4>No Screenshots Allowed</h4>
+                    <p>Taking screenshots or recording the screen is strictly prohibited and will flag your session.</p>
+                </div>
+            </div>
+            <div class="rule-item">
+                <i class="fa-solid fa-copy"></i>
+                <div class="rule-text">
+                    <h4>No Copying or Pasting</h4>
+                    <p>Copying text from the exam or pasting text from external sources is disabled.</p>
+                </div>
+            </div>
+            <div class="rule-item">
+                <i class="fa-solid fa-window-restore"></i>
+                <div class="rule-text">
+                    <h4>Do Not Switch Tabs</h4>
+                    <p>Leaving this browser tab or minimizing the window will result in an immediate warning.</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-agree" onclick="startTest()">I Agree - Start Exam</button>
+        <div class="warning-msg">Any violation of these rules will be reported to your proctor.</div>
+    </div>
+
+    <script>
+        // 1. Disable Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. Custom Warning Logic
+        const warningBox = document.getElementById('securityWarning');
+
+        function dismissWarning() {
+            warningBox.style.display = 'none';
+        }
+
+        // ADDED: A variable to track if we are intentionally leaving the page
+        let isNavigating = false;
+
+        // 3. Detect Tab Switching
+        document.addEventListener("visibilitychange", () => {
+            // UPDATED: Only show the warning if the page is hidden AND we aren't intentionally navigating
+            if (document.hidden && !isNavigating) {
+                warningBox.style.display = 'flex';
+            }
+        });
+
+        // 4. Function for the final button
+        function startTest() {
+            // Set the flag to true so the warning doesn't trigger during the page load
+            isNavigating = true; 
+            window.location.href = "exam.html"; 
+        }
+    </script>
+</body>
+</html>

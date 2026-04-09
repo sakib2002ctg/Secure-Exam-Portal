@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Exam Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & General Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #0b1021 0%, #1a1638 50%, #301020 100%); min-height: 100vh; display: flex; flex-direction: column; color: #ffffff; }
+        
+        /* Navigation Bar */
+        header { display: flex; justify-content: flex-start; align-items: center; padding: 20px 50px; width: 100%; }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links li a { text-decoration: none; color: #ffffff; font-size: 14px; font-weight: 500; transition: color 0.3s ease; }
+        .nav-links li a:hover { color: #d82b4a; }
+
+        /* Main Content Container */
+        .main-wrapper { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { display: flex; width: 1000px; height: 600px; background: rgba(255, 255, 255, 0.05); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
+
+        /* Left Panel */
+        .left-panel { flex: 1.1; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=1000') no-repeat center center/cover; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; }
+        .logo { font-size: 24px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .welcome-text h1 { font-size: 48px; margin-bottom: 5px; line-height: 1.1; }
+        .welcome-text h2 { font-size: 24px; margin-bottom: 20px; color: #d82b4a; }
+        .welcome-text p { font-size: 14px; line-height: 1.6; color: #dddddd; max-width: 320px; }
+        .social-icons { display: flex; gap: 15px; }
+        .social-icons a { color: #ffffff; font-size: 18px; text-decoration: none; transition: color 0.3s ease; }
+        .social-icons a:hover { color: #d82b4a; }
+
+        /* Right Panel */
+        .right-panel { flex: 0.9; background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(85, 15, 33, 0.9) 100%); padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
+        .right-panel h3 { font-size: 32px; text-align: center; margin-bottom: 40px; }
+        .input-group { position: relative; margin-bottom: 40px; }
+        .input-group label { display: block; font-size: 13px; margin-bottom: 5px; color: #eeeeee; }
+        .input-group input { width: 100%; background: transparent; border: none; border-bottom: 2px solid #ffffff; padding: 10px 30px 10px 0; color: #ffffff; font-size: 18px; outline: none; transition: border-color 0.3s; letter-spacing: 1px; }
+        .input-group input:focus { border-bottom-color: #d82b4a; }
+        .input-group i { position: absolute; right: 0; bottom: 12px; color: #ffffff; font-size: 16px; }
+        
+        .btn-signin { width: 100%; background-color: #d82b4a; color: #ffffff; border: none; padding: 12px; border-radius: 5px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background-color 0.3s; margin-bottom: 20px; margin-top: 10px; }
+        .btn-signin:hover { background-color: #b8223d; }
+        .signup-text { text-align: center; font-size: 13px; }
+        .signup-text a { color: #ffffff; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        .signup-text a:hover { color: #d82b4a; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <ul class="nav-links">
+            <li><a href="index.html" style="font-weight: 700;">Home</a></li>
+            
+            <li><a href="guidelines.html">Guidelines</a></li>
+            <li><a href="Team.html">Team</a></li>
+        </ul>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="container">
+            
+            <div class="left-panel">
+                <div class="logo"><i class="fa-solid fa-shield-halved"></i> ExamGuard</div>
+                
+                <div class="welcome-text">
+                    <h1>Exam Portal</h1>
+                    <h2>Secure Online Testing.</h2>
+                    <p>Please enter your designated Roll Number to access your scheduled examinations. Ensure your webcam and proctoring software are active.</p>
+                </div>
+
+                <div class="social-icons">
+                    <a href="guidelines.html" title="Help"><i class="fa-solid fa-circle-question"></i></a>
+                   
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <h3>Student Login</h3>
+                
+                <form action="exam.html" method="GET">
+                    <div class="input-group">
+                        <label for="rollnumber">Enter Roll Number</label>
+                        <input type="text" id="rollnumber" required autocomplete="off">
+                        <i class="fa-solid fa-id-badge"></i>
+                    </div>
+
+                    <button type="submit" class="btn-signin">Begin Session</button>
+
+                    
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

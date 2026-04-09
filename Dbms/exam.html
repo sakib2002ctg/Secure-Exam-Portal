@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Portal - Active Session</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0b1021;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #ffffff;
+            user-select: none; /* Prevents text selection */
+        }
+
+        /* Top Header Area */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(26, 26, 46, 0.95);
+            border-bottom: 3px solid #d82b4a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            background: rgba(216, 43, 74, 0.2);
+            padding: 8px 20px;
+            border-radius: 5px;
+            color: #ff6b81;
+            border: 1px solid rgba(216, 43, 74, 0.4);
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .student-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+        }
+
+        /* Main Layout */
+        .exam-layout {
+            display: flex;
+            flex: 1;
+            padding: 30px 40px;
+            gap: 30px;
+            height: calc(100vh - 75px);
+        }
+
+        /* Left Side - Question Area */
+        .question-area {
+            flex: 3;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .question-text {
+            font-size: 22px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .option-label:hover {
+            background: rgba(216, 43, 74, 0.1);
+            border-color: #d82b4a;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: #d82b4a;
+        }
+
+        /* Bottom Action Buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+        }
+
+        .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+        .btn-primary {
+            background: #d82b4a;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover { background: #b8223d; }
+
+        /* Right Side - Question Palette Sidebar */
+        .sidebar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .palette-btn {
+            aspect-ratio: 1;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .palette-btn:hover { background: rgba(255,255,255,0.2); }
+        
+        /* State colors for sidebar */
+        .palette-btn.active { background: #ffffff; color: #000; }
+        .palette-btn.answered { background: #28a745; color: #fff; }
+        .palette-btn.marked { background: #ffc107; color: #000; }
+
+        .legend {
+            margin-top: auto;
+            font-size: 13px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .box {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        .box.ans { background: #28a745; }
+        .box.unans { background: rgba(255,255,255,0.1); border: 1px solid #fff; }
+        .box.mark { background: #ffc107; }
+
+        .btn-submit-exam {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        
+        .btn-submit-exam:hover { background: #218838; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <i class="fa-solid fa-shield-halved"></i> ExamGuard
+        </div>
+        
+        <div class="timer-container">
+            <i class="fa-regular fa-clock"></i>
+            <span id="countdown">01:30:00</span>
+        </div>
+
+        <div class="student-info">
+            <span><strong>Active Session</strong> | Roll Number Confirmed</span>
+            <i class="fa-solid fa-circle-user" style="font-size: 30px; color: #d82b4a;"></i>
+        </div>
+    </header>
+
+    <div class="exam-layout">
+        
+        <div class="question-area">
+            <div class="question-header">
+                <h3>Question 1 of 20</h3>
+                <span style="color: #bbbbbb;">Subject: Computer Science 101</span>
+            </div>
+
+            <div class="question-text">
+                What is the primary function of a CPU (Central Processing Unit) in a computer system?
+            </div>
+
+            <div class="options-container">
+                <label class="option-label">
+                    <input type="radio" name="q1" value="A"> 
+                    A) To permanently store operating system files and user data.
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="B"> 
+                    B) To render high-quality 3D graphics and video output.
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="C"> 
+                    C) To execute instructions of a computer program by performing basic arithmetic, logic, and input/output operations.
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="D"> 
+                    D) To supply continuous electrical power to the motherboard.
+                </label>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">
+                    <i class="fa-solid fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fa-solid fa-flag"></i> Mark for Review
+                </button>
+                <button class="btn btn-primary">
+                    Save & Next <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>Question Navigator</h3>
+            
+            <div class="palette-grid">
+                <button class="palette-btn active">1</button>
+                <button class="palette-btn">2</button>
+                <button class="palette-btn">3</button>
+                <button class="palette-btn answered">4</button>
+                <button class="palette-btn answered">5</button>
+                <button class="palette-btn marked">6</button>
+                <button class="palette-btn">7</button>
+                <button class="palette-btn">8</button>
+                <button class="palette-btn">9</button>
+                <button class="palette-btn">10</button>
+                <button class="palette-btn">11</button>
+                <button class="palette-btn">12</button>
+                <button class="palette-btn">13</button>
+                <button class="palette-btn">14</button>
+                <button class="palette-btn">15</button>
+                <button class="palette-btn">16</button>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item"><div class="box ans"></div> Answered</div>
+                <div class="legend-item"><div class="box unans"></div> Not Answered</div>
+                <div class="legend-item"><div class="box mark"></div> Marked for Review</div>
+            </div>
+
+            <button class="btn-submit-exam" onclick="submitExam()">Submit Final Exam</button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. TIMER SCRIPT ---
+        let timeInSeconds = 90 * 60; // 90 minutes
+        const timerDisplay = document.getElementById('countdown');
+
+        setInterval(() => {
+            if(timeInSeconds <= 0) {
+                alert("Time is up! The exam will be auto-submitted.");
+                window.location.href = "#"; // Replace with your end screen URL
+                return;
+            }
+            
+            timeInSeconds--;
+            let h = Math.floor(timeInSeconds / 3600);
+            let m = Math.floor((timeInSeconds % 3600) / 60);
+            let s = timeInSeconds % 60;
+            
+            // Add leading zeros
+            h = h < 10 ? "0" + h : h;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+            
+            timerDisplay.textContent = `${h}:${m}:${s}`;
+        }, 1000);
+
+        // --- 2. SUBMIT EXAM FUNCTION ---
+        function submitExam() {
+            if(confirm("Are you sure you want to submit? You cannot return to the exam after this.")) {
+                alert("Exam Submitted Successfully. Your session will now close.");
+                // Redirect back to home or a "thank you" page
+                window.location.href = "index.html"; // Redirects to your login page
+            }
+        }
+
+        // --- 3. SECURITY SCRIPTS (Carried over from Rules page) ---
+        // Disable Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Disable Copy/Cut/Paste
+        document.addEventListener('copy', event => { event.preventDefault(); alert("Copying is strictly prohibited!"); });
+        document.addEventListener('cut', event => { event.preventDefault(); alert("Cutting is strictly prohibited!"); });
+        document.addEventListener('paste', event => { event.preventDefault(); alert("Pasting is strictly prohibited!"); });
+
+        // Detect Tab Switching or minimizing
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                // In a real system, this would send an AJAX request to the server to flag the student
+                alert("SECURITY WARNING: You navigated away from the exam tab. This incident has been logged and reported to your proctor.");
+            }
+        });
+    </script>
+</body>
+</html>
