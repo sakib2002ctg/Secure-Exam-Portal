@@ -1,0 +1,10 @@
+{
+  "name": "secure-exam-portal",
+  "version": "1.0.0",
+  "dependencies": {
+    "@prisma/client": "latest"
+  },
+  "devDependencies": {
+    "prisma": "latest"
+  }
+}
